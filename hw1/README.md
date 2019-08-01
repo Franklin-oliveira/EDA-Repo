@@ -9,7 +9,7 @@ Pasta com a solução do *Homework 1*.
 > - Como funcionam os algoritmos de sorting (Insertion Sort, Merge Sort, Quick Sort e Bubble Sort).
 > - Como implementar esses algoritmos em C++ e Python;
 
-## Lista de Arquivos:
+## Lista de arquivos:
 
 > - **hw1.pdf:** Esse arquivo contém o enunciado e as respostas de cada questão. 
 > - **main.tex:** Código em LaTeX (usado para gerar o arquivo hw1.pdf).
