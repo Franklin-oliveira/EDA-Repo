@@ -1,0 +1,343 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+
+% set the default code style
+\lstset{
+    language=C++,
+    frame=tb, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{mygreen}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red}, % string color
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+
+\parindent0in
+\pagestyle{plain}
+\thispagestyle{plain}
+
+\newcommand{\assignment}{Homework 2}
+\newcommand{\duedate}{August 13, 2019}
+
+
+% \renewcommand\thesubsection{\arabic{subsection}}
+
+\title{Homework 2}
+\date{}
+
+\begin{document}
+
+Fundação Getulio Vargas\hfill\\
+Estruturas de Dados e Algoritmos\hfill\textbf{\assignment}\\
+Prof.\ Jorge Poco\hfill\textbf{Due:}: \duedate\\
+\smallskip\hrule\bigskip
+
+\textbf{Aluno:} Franklin Alves de Oliveira
+{\let\newpage\relax\maketitle}
+
+\maketitle
+
+
+\section{Red-Black Trees}
+
+I am attaching a binary tree source code (\texttt{bst-0.0.cpp}) with the methods insert, delete and print. Your job would be to implement a Red-Black Tree with the functions insert, remove and print. 
+
+To test your code you can follow the examples described in the document \texttt{anexo1.pdf}. In addition, you might be interested in the document \texttt{anexo2.pdf} for a more detailed description of this tree, there is also some Java code that might be useful. 
+
+Note, your code must be implemented in C++ and based in the BST class I'm providing you. Grading would be as follow:
+
+\begin{enumerate}[label=(\alph*)]
+  \item \textbf{(2.5pts)} insert 
+  \item \textbf{(2.5pts)} remove 
+\end{enumerate}
+
+An example of the main function is: 
+
+\begin{lstlisting}
+int main() {
+  // this constructor must call the function insert multiple times 
+  // respecting the order
+  RBTree tree(41, 38, 31, 12, 19, 8);
+  tree.print();
+
+  // testing the remove function
+  tree.remove(8);
+  tree.print();
+}
+\end{lstlisting}
+
+\textcolor{red}{OBS:} Não consegui fazer a tempo. 
+
+
+\vspace{\baselineskip}
+
+\section{Radix Sort}
+
+\textbf{(2pts) }Your job is to implement the radix sort algorithm in Python. The following code is going to be used to test your implementation. You have to submit a notebook with your code. 
+ 
+ \newpage
+ 
+\begin{lstlisting}[language=Python]
+def radix_sort(A, d, k):
+  # A consists of n d-digit ints, with digits ranging 0 -> k-1
+  #
+  # implement your code here
+  # return A_sorted
+
+
+# Testing your function
+A = [201, 10, 3, 100]
+A_sorted = radix_sort(A, 3, 10)
+print(A_sorted)
+# output: [3, 10, 100, 201]
+\end{lstlisting}
+
+\vspace{\baselineskip}
+
+\textcolor{red}{Solução: }
+
+\vspace{\baselineskip}
+
+Vide o arquivo q2-RadixSort.ipynb. Nele consta uma implementação do Radix Sort, com Counting Sort como \textit{stable sorting algorithm}.
+
+\vspace{\baselineskip}
+
+\section{Sorting in Place in Linear Time}
+\textbf{(1.5pts)} Suppose that we have an array of $n$ data records to sort and that the key of each record has the value 0 or 1. An algorithm for sorting such a set of records might possess some subset of the following three desirable characteristics:
+
+\begin{enumerate}
+  \item The algorithm runs in $O(n)$ time.
+  \item The algorithm is stable.
+  \item The algorithm sorts in place, using no more than a constant amount of storage space in addition to the original array.
+\end{enumerate}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Give an algorithm that satisfies criteria 1 and 2 above.
+  
+  \textcolor{red}{Solução: }
+    Counting Sort. Tem complexidade $O(n)$ e é um algoritmo \textit{stable}.
+    
+  \item Give an algorithm that satisfies criteria 1 and 3 above.
+    
+    \textcolor{red}{Solução: }
+    Quick Sort, com \textit{Partition}. Por exemplo, podemos selecionar um elemento $x=0$ como pivô. Então, dividimos o vetor em duas partições: Uma com elementos $\leq 0$ e outra com elementos $>0$ (todos os 1's). Então, cada um dos vetores é ordenado. 
+    
+    Esse algoritmo é \textit{inplace} e tem complexidade $O(n)$, conforme requerido.
+  
+  \item Give an algorithm that satisfies criteria 2 and 3 above.
+  
+    \textcolor{red}{Solução: }
+    Insertion Sort. Como sabemos (Rerefência: Cormen, T. H.; \textit{Introduction to Algorithms}, 3rd Ed.), esse algoritmo é \textit{stable} e \textit{inplace}. Além disso, não usa nenhum espaço adicional de memória em relação ao vetor original.
+    
+  \item Can any of your sorting algorithms from parts(a)–(c) be used to sort $n$ records with $b$-bit keys using radix sort in $O(bn)$ time? Explain how or why not.
+  
+    \textcolor{red}{Solução: }
+    Sim. Poderíamos usar o Counting Sort com esse propósito. Sabemos que esse algoritmo tem complexidade $O(n)$. Para valores com chave $b-$bits, com cada \textit{bit} variando entre 0 e 1, podemos ordenar o vetor em um tempo de ordem $O(b(n+2)) = O(bn)$.  
+
+    
+  \item Suppose that the $n$ records have keys in the range from 1 to $k$. Show how to modify counting sort so that the records can be sorted in place in $O(n + k)$ time. You may use $O(k)$ storage outside the input array. Is your algorithm stable? (Hint: How would you do it for $k = 3$?)
+  \vspace{\baselineskip}
+  
+  \textcolor{red}{Solução: } O algoritmo Counting Sort Modificado para esse item será dado a seguir (em Python). 
+  
+  \vspace{\baselineskip}
+  
+  \begin{lstlisting}[language=Python]
+    def Modified_Counting_Sort(A, k):
+        B = [0]*k  # inicializa um novo vetor B
+        
+        # Aumenta o elemento B[A[i]] em 1
+        for i in range(len(A)):
+            B[A[i]] = B[A[i]] + 1
+        
+        y = 0
+        for i in range(k):
+            for j in range(1,C[i]):
+                y += 1
+                A[y] = i   # Armazena os elementos cujos valores sao i
+    
+\end{lstlisting}
+
+O algoritmo modificado é \textit{inplace}, porém não é \textit{stable}. Além disso, sua complexidade é de $O(n+k)$.
+
+\end{enumerate}
+
+
+
+\vspace{\baselineskip}
+
+\section{Alternative Quicksort Analysis} 
+\textbf{(1.5pts)} An alternative analysis of the running time of randomized quicksort focuses on the expected running time of each individual recursive call to QUICKSORT, rather than on the number of comparisons performed.
+
+\begin{enumerate}[label=(\alph*)]
+
+\vspace{\baselineskip}
+  \item Argue that, given an array of size $n$, the probability that any particular element is chosen as the pivot is $1/n$. Use this to define indicator random variables $X_i = I \{i\mbox{th smallest element is chosen as the pivot}\}$. What is $E[X_i]$?
+  
+  \textcolor{red}{Solução: }
+  
+  Considerando que o pivô é um elemento do vetor escolhido ao acaso, se o vetor tem $n$ elementos e a chance de qualquer elemento ser selecionado é a mesma para os demais (isto é, nenhum elemento tem maior probabilidade de ser escolhido em relação aos demais), temos: 
+  
+  Se $p_i$ é a probabilidade de se escolher o elemento $i$ do vetor, temos que:
+  
+  \begin{itemize}
+      \item $p_i \geq 0,~\forall~i$. 
+      \item $\sum_{i=1}^{n} p_i = 1$
+  \end{itemize}
+  
+  Do segundo ponto, como todos os elementos têm a mesma chance de ser escolhido, vamos considerar $p_i = \overline{p}$. Assim, $\sum_{i=1}^{n} p_i = n \cdot \overline{p} = 1 \Rightarrow{} \overline{p} = \frac{1}{n}$. 
+  
+  Ainda, considerando a variável aleatória $X_i = I\{i-$ésimo menor elemento é escolhido como pivô\}, como cada elemento é equiprovável, segue que:
+  
+  $$ 
+  E(X_i) = p_i \cdot I_i = p_i \cdot 1 = \overline{p} = \frac{1}{n}
+  $$
+  
+\vspace{\baselineskip} 
+  \item Let $T(n)$ be a random variable denoting the running time of quicksort on an array of size $n$. Argue that
+  \begin{equation}
+    E[T(n)]=E\left[\sum_{q=1}^{n}X_q(T(q-1)+T(n-q)+\Theta(n))\right]  
+    \label{eq:1}
+  \end{equation}
+  
+  \textcolor{red}{Solução: }
+  
+  Tome o seguinte pseudocódigo do Quicksort: 
+  
+  \begin{lstlisting}[language=Python]
+  def quicksort(A,d,k):
+        if d < k:
+            q = partition(A,d,k)
+            quicksort(A,d,q-1)
+            quicksort(A,q+1,k)
+  \end{lstlisting}
+  
+  Nesse algoritmo, é definido um pivô (que estamos chamando de $p$ no código acima), que será tomado como referência para particionar o vetor original, isto é, dividimos o vetor original em dois novos vetores (um com $q-1$ elementos menores que $q$ e outro com $n-q$ elementos maiores que $q$). Então, chamamos o quicksort recursivamente em cada um desses novos vetores. O algoritmo de partição (\textit{partition}), tem complexidade $\Theta(n)$. Assim, o tempo de execução do \textit{quicksort} é dado por: 
+  
+  $$
+  T(n) = T(q-1) + T(n-q) + \Theta(n)
+  $$
+  
+  Logo, considerando a variável aleatória $X_i$ definida no item anterior e aplicando o operador esperança, temos: 
+  
+  $$
+  E[T(n)] = E[\sum_{q=1}^{n}X_q(T(q-1) + T(n-q) + \Theta(n))]
+  $$ 
+  
+\vspace{\baselineskip}  
+  \item Show that equation~\ref{eq:1} simplifies to
+  \begin{equation} \label{eq:item-c}
+    E[T(n)] = \frac{2}{n}\sum_{q=0}^{n-1}E[T(q)] + \Theta(n)
+    \label{eq:2}
+  \end{equation}
+    \textcolor{red}{Solução: }
+    
+    $$
+    \mathrm{E}\left[\sum_{q=1}^{n} X_{q}(T(q-1)+T(n-q)+\Theta(n))\right]
+    =
+    \sum_{q=1}^{n} \mathrm{E}\left[X_{q}(T(q-1)+T(n-q)+\Theta(n))\right]
+    =
+    $$
+    
+    $$
+    =\sum_{q=1}^{n}(T(q-1)+T(n-q)+\Theta(n)) / n
+    =\Theta(n)+\frac{1}{n} \sum_{q=1}^{n}(T(q-1)+T(n-1))
+    =
+    $$
+    
+    $$
+    =\Theta(n)+\frac{1}{n}\left(\sum_{q=1}^{n} T(q-1)+\sum_{q=1}^{n} T(n-q)\right)
+    =\Theta(n)+\frac{1}{n}\left(\sum_{q=1}^{n} T(q-1)+\sum_{q=1}^{n} T(q-1)\right) = 
+    $$
+    
+    $$ 
+    = \Theta(n)+\frac{2}{n} \sum_{q=1}^{n} T(q-1)
+    =~\Theta(n)+\frac{2}{n} \sum_{q=0}^{n-1} T(q)
+    =~\Theta(n)+\frac{2}{n} \sum_{q=2}^{n-1} T(q)
+    $$
+
+\vspace{\baselineskip}
+  \item Show that
+  \begin{equation} \label{eq:item-d}
+    \sum_{k=1}^{n-1} k \lg k \leq \frac{1}{2}n^2\lg n - \frac{1}{8}n^2
+    \label{eq:3}
+  \end{equation}
+  (Hint: Split the summation into two parts, one for $k=1,2, \ldots, \lceil n/2 \rceil - 1$ and \\ one for $k=\lceil n/2 \rceil~,\ldots,~n-1.)$
+  
+  \textcolor{red}{Solução: }
+  
+$$
+\sum_{k=1}^{n-1} k \log k = \sum_ {k=1}^{\lceil n/2 \rceil -1} k \log k + \sum_{\lceil n/2 \rceil}^{n-1}k \log k 
+\leq
+\sum_ {k=1}^{\lceil n/2 \rceil -1} k \log k + \sum_{k= \lceil n/2 \rceil } ^{n-1} k \log k = 
+$$
+
+$$ 
+= \log \left(\frac{n}{2}\right) \sum_{k=1}^{\lceil n/2 \rceil -1} k + \log n + \sum_{\lceil n/2 \rceil}^{n-1} k = \log n \sum_{k=1}^{\lceil n/2 \rceil -1} k - \sum_{k=1}^{\lceil n/2 \rceil -1} k + \log n \sum_{\lceil n/2 \rceil}^{n-1} k = 
+$$
+
+$$
+= \log n \cdot \left (  \frac{n(n-1)}{2} \right ) - \left ( \frac{\lceil n/2 \rceil (\lceil n/2 \rceil -1 ) }{2} \right ) 
+\leq 
+\log n \cdot \left ( \frac{n^2 -2n}{2}  \right ) - \left ( \frac{n^2 -1}{2} \right )  \leq
+$$
+  
+$$
+\leq \frac{n^2 \log n}{2} - \frac{n^2}{8} 
+$$
+
+Se tomarmos $N \in \mathbb{N}$ grande o suficiente, a desigualdade acima é válida para todo $n \geq N$. Nesse caso, a desigualdade é válida para todo $n \geq 2$. 
+
+\vspace{\baselineskip}
+
+  % Note que, se $g(k) = k \log k \Rightarrow{} g'(k) = \log k + 1$. 
+
+  \item Using the bound from equation~\ref{eq:3}, show that the recurrence in equation~\ref{eq:2} has the solution $E[T(n)]=\Theta(n\lg n)$. (Hint: Show, by substitution, that $E[T(n)] \leq an \log n - bn$ for some positive constants $a$ and $b$.)
+  
+  \textcolor{red}{Solução: }
+  
+  Suponha, por indução, que $T(q) \leq q \lg (q)+\Theta(n)$. Das equações \ref{eq:item-c} e \ref{eq:item-d}, temos: 
+  
+  $$
+  \mathrm{E}[T(n)]=\frac{2}{n} \sum_{q=2}^{n-1}     \mathrm{E}[T(q)]+\Theta(n)
+  \leq 
+  \frac{2}{n} \sum_{q=2}^{n-1}(q \lg q+\Theta(n))+\Theta(n)
+  $$
+  
+  Aplicando o método da substituição...
+  
+  $$
+  \mathrm{E}[T(n)] 
+  \leq 
+  \frac{2}{n} \sum_{q=2}^{n-1} q \lg q+\frac{2}{n} \Theta(n)+\Theta(n)
+  \leq \frac{2}{n}\left(\frac{1}{2} n^{2} \lg n-\frac{1}{8} n^{2}\right)+\Theta(n)
+  $$
+  
+  Da equação \ref{eq:item-d}, temos: 
+  
+  $$
+  \mathrm{E}[T(n)] \leq 
+  n \lg n-\frac{1}{4} n+\Theta(n)
+   =n \lg n+\Theta(n)
+  $$
+  
+  Como queríamos demonstrar. 
+\end{enumerate}
+
+
+
+\end{document}
